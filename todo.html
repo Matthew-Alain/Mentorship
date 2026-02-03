@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<style>
+    .done {
+        text-decoration: line-through;
+    }
+</style>
+
+<script>
+
+    function addTask(){
+        var text = document.getElementById('newTaskText').value;
+        if(text==""){
+            console.log("Text is empty");
+        }else{
+            var table = document.getElementById('tasks')
+            var numberOfRows = table.tBodies[0].rows.length;
+            var row = table.insertRow(numberOfRows);
+            row.setAttribute("id", numberOfRows)
+            var cell1 = row.insertCell(0)
+            cell1.innerHTML = text;
+            var cell2 = row.insertCell(1)
+            cell2.innerHTML = '<button type="button" onclick="doneTask('+numberOfRows+')">Complete</button>'
+            var cell3 = row.insertCell(2)
+            cell3.innerHTML = '<button type="button" onclick="deleteRow('+numberOfRows+')">Delete Item</button>'
+            document.getElementById('newTaskText').value = "";
+        }
+    }
+
+    function doneTask(rowID){
+        var elm = document.getElementById(rowID).childNodes[0];
+        if(elm.getAttribute("class") == "done"){
+            document.getElementById(rowID).childNodes[0].setAttribute("class", "none");
+        }else{
+            document.getElementById(rowID).childNodes[0].setAttribute("class", "done");
+        }
+    }
+
+    function deleteRow(rowID) {
+        document.getElementById(rowID).remove()
+    }
+
+</script>
+<title>To do list</title>
+<meta charset="utf-8">
+</head>
+<body>
+To do list:
+<table id="tasks">
+    <thead>
+        <tr><th>
+            Task
+        </th></tr>
+    </thead>
+    <tbody>
+        <tr id="input">
+            <td>
+                <input type="text" name="task" id='newTaskText'>
+            </td>
+            <td>
+                <button type="button" onclick="addTask()">Add task</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
